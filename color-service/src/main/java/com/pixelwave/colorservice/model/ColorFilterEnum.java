@@ -7,9 +7,9 @@ import java.awt.*;
 
 
 public enum ColorFilterEnum {
-    BLUE("Blue No Opacity", new Colorize(new Color(0, 0, 255,127))),
-    RED("Red No Opacity", new Colorize(new Color(255, 0, 0,127))),
-    GREEN("Green No Opacity", new Colorize(new Color(0, 255, 0,127))),
+    BLUE("blue", new Colorize(new Color(0, 0, 255,127))),
+    RED("red", new Colorize(new Color(255, 0, 0,127))),
+    GREEN("green", new Colorize(new Color(0, 255, 0,127))),
     GRAYSCALE("Grayscale", new Colorize(new Color(0, 0, 0), 127));
 
     private final String name;
