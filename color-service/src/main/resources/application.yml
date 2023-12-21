@@ -1,4 +1,5 @@
-spring.profiles.active=${PROFILE:prod}
-spring.application.name=format-service
+spring.application.name=color-service
+spring.profiles.active=${PROFILE:dev}
+
 spring.config.import=optional:configserver:http://localhost:8888
 spring.cloud.config.fail-fast=true

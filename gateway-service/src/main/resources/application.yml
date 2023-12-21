@@ -1,33 +1,6 @@
-# Configura��es do Servidor
-server:
-  port: 8084
-
-# Configura��es do Eureka
-spring:
-  application:
-    name: gateway-service
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-  profiles:
-    active: eureka
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-
-  # Configuraçoes do Gateway
-  cloud:
-    gateway:
-      routes:
-        - id: color-service
-          uri: lb://color-service
-          predicates:
-            - Path=/color-service/**
-        - id: compression-service
-          uri: lb://compression-service
-          predicates:
-            - Path=/compression-service/**
+spring.application.name=gateway-service
+spring.profiles.active=${PROFILE:dev}
+spring.config.import=optional:configserver:http://localhost:8888
+spring.cloud.config.fail-fast=true
+management.endpoint.gateway.enabled=true
+management.endpoints.web.exposure.include=*
