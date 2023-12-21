@@ -6,10 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class PixelWaveImageStorageServiceApplication {
+public class StorageServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PixelWaveImageStorageServiceApplication.class, args);
+        SpringApplication.run(StorageServiceApplication.class, args);
     }
 
 }

@@ -8,9 +8,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-public class PixelWaveImageCompressionServiceApplication {
+public class CompressionServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(PixelWaveImageCompressionServiceApplication.class, args);
+        SpringApplication.run(CompressionServiceApplication.class, args);
     }
 
 }
