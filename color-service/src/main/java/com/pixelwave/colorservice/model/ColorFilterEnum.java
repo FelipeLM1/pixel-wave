@@ -7,10 +7,10 @@ import java.awt.*;
 
 
 public enum ColorFilterEnum {
-    BLUE("blue", new Colorize(new Color(0, 0, 255,127))),
-    RED("red", new Colorize(new Color(255, 0, 0,127))),
-    GREEN("green", new Colorize(new Color(0, 255, 0,127))),
-    GRAYSCALE("Grayscale", new Colorize(new Color(0, 0, 0), 127));
+    BLUE("blue", new Colorize(new Color(0, 0, 255, 127))),
+    RED("red", new Colorize(new Color(255, 0, 0, 127))),
+    GREEN("green", new Colorize(new Color(0, 255, 0, 127))),
+    GRAYSCALE("gray", new Colorize(new Color(127, 127, 127, 127)));
 
     private final String name;
     private final ImageFilter filter;
