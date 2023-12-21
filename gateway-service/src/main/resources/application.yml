@@ -1,6 +1,19 @@
-spring.application.name=gateway-service
-spring.profiles.active=${PROFILE:dev}
-spring.config.import=optional:configserver:http://localhost:8888
-spring.cloud.config.fail-fast=true
-management.endpoint.gateway.enabled=true
-management.endpoints.web.exposure.include=*
+spring:
+  application:
+    name: gateway-service
+  config:
+    import: optional:configserver:http://localhost:8888
+  cloud:
+    config:
+      fail-fast: 'true'
+  profiles:
+    active: ${PROFILE:dev}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    gateway:
+      enabled: 'true'

@@ -1,4 +1,10 @@
-spring.profiles.active=${PROFILE:dev}
-spring.application.name=format-service
-spring.config.import=optional:configserver:http://localhost:8888
-spring.cloud.config.fail-fast=true
+spring:
+  application:
+    name: format-service
+  config:
+    import: optional:configserver:http://localhost:8888
+  cloud:
+    config:
+      fail-fast: 'true'
+  profiles:
+    active: ${PROFILE:dev}
