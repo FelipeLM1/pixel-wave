@@ -30,7 +30,7 @@ public class ImageController {
     }
 
     @PostMapping(value = "/upload", consumes = {"multipart/form-data"})
-    public ResponseEntity<?> uploadImage(
+    public ResponseEntity<Image> uploadImage(
             @RequestParam("name") String name,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
@@ -58,14 +58,14 @@ public class ImageController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getImageById(@PathVariable Long id) {
+    public ResponseEntity<Image> getImageById(@PathVariable Long id) {
         logger.info("Recebida solicitação para obter a informação da imagem com ID: {}", id);
         Image image = imageService.getImageById(id);
         logger.info("Informação da imagem {} obtida com sucesso", image != null ? image.getName() : "N/A");
         return ResponseEntity.ok(image);
     }
 
-    @GetMapping("/list")
+    @GetMapping
     public ResponseEntity<List<Image>> getAllImages() {
         logger.info("Recebida solicitação para obter a lista de todas as imagens");
         List<Image> images = imageService.getAllImages();
