@@ -1,10 +1,15 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 spring:
-  application:
-    name: color-service
   config:
     import: optional:configserver:http://localhost:8888
+  application:
+    name: storage-service
   cloud:
     config:
       fail-fast: 'true'
   profiles:
-    active: ${PROFILE:rabbit}
+    active: rabbit

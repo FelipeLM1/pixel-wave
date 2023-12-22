@@ -7,4 +7,4 @@ spring:
     config:
       fail-fast: 'true'
   profiles:
-    active: ${PROFILE:dev}
+    active: ${PROFILE:rabbit}
