@@ -4,8 +4,7 @@ import com.pixelwave.imagestorage.config.exception.ApiError;
 import com.pixelwave.imagestorage.config.exception.ImageNotFoundException;
 import com.pixelwave.imagestorage.config.exception.ImageStorageException;
 import com.pixelwave.imagestorage.config.exception.InvalidImageException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -15,15 +14,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+@Slf4j
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleGlobalException(Exception ex, WebRequest request) {
-        logger.error("Erro não tratado: {}", ex.getMessage(), ex);
+        log.error("Erro não tratado: {}", ex.getMessage(), ex);
         return buildResponseEntity(ApiError.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .message("Ocorreu um erro inesperado")
