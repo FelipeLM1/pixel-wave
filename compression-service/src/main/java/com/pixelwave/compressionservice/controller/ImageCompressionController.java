@@ -2,6 +2,8 @@ package com.pixelwave.compressionservice.controller;
 
 import com.pixelwave.compressionservice.dto.CompressImageDTO;
 import com.pixelwave.compressionservice.service.ImageCompressionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,8 @@ import java.util.Objects;
 @RequestMapping("/v1/compress")
 public class ImageCompressionController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ImageCompressionController.class);
+
     private final ImageCompressionService compressionService;
 
     public ImageCompressionController(ImageCompressionService compressionService) {
@@ -23,14 +27,14 @@ public class ImageCompressionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Resource> compressImage(@PathVariable Long id, @RequestParam(name = "quality") Double quality) throws IOException {
-
-
-        var res = compressionService.compressImage(new CompressImageDTO(id, quality));
+    public ResponseEntity<Resource> compressImage(@PathVariable Long id, @RequestParam(name = "scale") Double scale) throws IOException {
+        logger.info("Compress Request: Id: {},  Scale: {}", id, scale);
+        var res = compressionService.compressImage(new CompressImageDTO(id, scale));
         HttpHeaders headers = getHttpHeaders(res.filename());
 
         if (Objects.isNull(res)) return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
 
+        logger.info("Processing completed successfully!");
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentLength(res.resource().contentLength())

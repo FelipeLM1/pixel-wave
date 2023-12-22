@@ -2,6 +2,8 @@ package com.pixelwave.formatservice.controller;
 
 import com.pixelwave.formatservice.model.ImageFormat;
 import com.pixelwave.formatservice.service.ImageFormatService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,8 @@ import java.util.Objects;
 @Validated
 public class FormatController {
 
+    private static final Logger logger = LoggerFactory.getLogger(FormatController.class);
+
     private final ImageFormatService service;
 
     public FormatController(ImageFormatService service) {
@@ -27,12 +31,14 @@ public class FormatController {
     @GetMapping("/{id}")
     public ResponseEntity<Resource> imageConverter(@PathVariable Long id, @RequestParam(name = "format") String format) throws IOException {
 
-
+        logger.info("Compress Request: Id: {},  Format: {}", id, format);
         var res = service.formatImage(id, format);
 
         HttpHeaders headers = getHttpHeaders(res.filename().split("\\.")[0], ImageFormat.fromString(format).getValue());
 
         if (Objects.isNull(res)) return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+
+        logger.info("Processing completed successfully!");
 
         return ResponseEntity.ok()
                 .headers(headers)

@@ -45,8 +45,7 @@ public class ImageCompressionService {
 
         Thumbnails
                 .of(imageRes.getInputStream())
-                .outputQuality(compressImageDTO.compressionQuality())
-                .scale(1.0)
+                .scale(compressImageDTO.scale())
                 .toOutputStream(outputStream);
 
         return new ResourceResponseDTO(imageRes.getFilename(), createTempFile(outputStream.toByteArray()));
@@ -57,25 +56,25 @@ public class ImageCompressionService {
     }
 
     private ResourceResponseDTO fallbackCircuitBreakerApplyFilter(CompressImageDTO dto, Throwable throwable) {
-        logger.error("CircuitBreaker Fallback - Falha ao processar a requisição: id: {}, quality: {}", dto.id(), dto.compressionQuality());
+        logger.error("CircuitBreaker Fallback - Falha ao processar a requisição: id: {}, quality: {}", dto.id(), dto.scale());
         logger.error("Fallback acionado devido a uma exceção: {}", throwable.getMessage());
         return null;
     }
 
     private ResourceResponseDTO fallbackBulkheadApplyFilter(CompressImageDTO dto, Throwable throwable) {
-        logger.error("Bulkhead Fallback - Falha ao processar a requisição: id: {}, quality: {}", dto.id(), dto.compressionQuality());
+        logger.error("Bulkhead Fallback - Falha ao processar a requisição: id: {}, quality: {}", dto.id(), dto.scale());
         logger.error("Fallback acionado devido a uma exceção: {}", throwable.getMessage());
         return null;
     }
 
     private ResourceResponseDTO fallbackRetryApplyFilter(CompressImageDTO dto, Throwable throwable) {
-        logger.error("Retry Fallback - Falha ao processar a requisição: id: {}, quality: {}", dto.id(), dto.compressionQuality());
+        logger.error("Retry Fallback - Falha ao processar a requisição: id: {}, quality: {}", dto.id(), dto.scale());
         logger.error("Fallback acionado devido a uma exceção: {}", throwable.getMessage());
         return null;
     }
 
     private ResourceResponseDTO fallbackRateLimiterApplyFilter(CompressImageDTO dto, Throwable throwable) {
-        logger.error("RateLimiter Fallback - Falha ao processar a requisição: id: {}, quality: {}", dto.id(), dto.compressionQuality());
+        logger.error("RateLimiter Fallback - Falha ao processar a requisição: id: {}, quality: {}", dto.id(), dto.scale());
         logger.error("Fallback acionado devido a uma exceção: {}", throwable.getMessage());
         return null;
     }

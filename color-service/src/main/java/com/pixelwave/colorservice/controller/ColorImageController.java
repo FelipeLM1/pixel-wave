@@ -3,6 +3,8 @@ package com.pixelwave.colorservice.controller;
 import com.pixelwave.colorservice.model.ColorFilterEnum;
 import com.pixelwave.colorservice.model.ImageFilterRequest;
 import com.pixelwave.colorservice.service.ColorImageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/v1/color")
 public class ColorImageController {
+    private static final Logger logger = LoggerFactory.getLogger(ColorImageController.class);
 
     private final ColorImageService service;
 
@@ -28,11 +31,12 @@ public class ColorImageController {
 
     @PostMapping("/apply-filter")
     public ResponseEntity<Resource> applyColorFilter(@RequestBody ImageFilterRequest imageRequest) throws IOException {
+        logger.info("Apply Filter request - Id: {} , Filter: {}" , imageRequest.id(), imageRequest.filter());
         ColorFilterEnum selectedFilter = ColorFilterEnum.fromString(imageRequest.filter());
         var res = service.applyFilter(imageRequest.id(), selectedFilter);
 
         if (Objects.isNull(res)) return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
-
+        logger.info("Processing completed successfully!");
         return ResponseEntity.ok()
                 .headers(getHttpHeaders(res.filename()))
                 .contentLength(res.resource().contentLength())
